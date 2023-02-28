@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+  
+{% block content %}
+    <h1>{% block title %} Dislikes Admin {% endblock %}</h1>
+    <a class="btn" href="{{ url_for('admin') }}">Back to Admin</a>
+    {% for dislike in dislikes %}
+        <div class='dislike'>
+                <p>Story:{{dislike['title']}}, Disliked By:{{dislike['userID']}}</p>
+                <a class="btn" href="{{ url_for('deleteDislike', story_ID=dislike['storyID'], user_ID=dislike['userID']) }}"method="POST">Delete</a>
+    {% endfor %}
+{% endblock %}

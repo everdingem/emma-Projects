@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+  
+{% block content %}
+    <h1>{% block title %} Likes Admin {% endblock %}</h1>
+    <a class="btn" href="{{ url_for('admin') }}">Back to Admin</a>
+    {% for like in likes %}
+        <div class='like'>
+                <p>Story:{{like['title']}}, Liked By:{{like['userID']}}</p>
+                <a class="btn" href="{{ url_for('deleteLike', story_ID=like['storyID'], user_ID=like['userID']) }}"method="POST">Delete</a>
+    {% endfor %}
+{% endblock %}
+
