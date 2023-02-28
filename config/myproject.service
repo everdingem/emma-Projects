@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve myproject
+After=network.target
+
+[Service]
+User=emma
+Group=www-data
+WorkingDirectory=/home/emma/myproject
+Environment="PATH=/home/emma/myproject/myprojectenv/bin"
+ExecStart=/home/emma/myproject/myprojectenv/bin/gunicorn --workers 3 --bind unix:myproject.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target

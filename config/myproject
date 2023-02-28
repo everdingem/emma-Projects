@@ -1,0 +1,33 @@
+server {
+    server_name hackernews-eedp www.hackernews-eedp.com;
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/emma/myproject/myproject.sock;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/www.hackernews-eedp.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/www.hackernews-eedp.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+}
+
+server {
+    if ($host = www.hackernews-eedp.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = hackernews-eedp.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    
+    listen 80;
+    server_name hackernews-eedp.com www.hackernews-eedp.com;
+    return 301 https://$host$request_uri;
+    # return 404; # managed by Certbot
+}
